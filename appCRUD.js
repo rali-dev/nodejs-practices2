@@ -20,8 +20,8 @@ app.get('/api/users/:id', (req, res)=>{
   //  if(!user) return res.status(404).send('The user with the given ID was not found.');
     if(!user) return res.status(404).json({
       error: 'The user with the given ID was not found.'
-   });
-   res.json({
+   });  
+   res.status(200).json({
       data: user, 
       message: 'ok'
    });
