@@ -5,6 +5,7 @@ app.get('/', (req, res) => {
   res.send('Hello Express!');
 });
 
+// Query parameters: http://localhost:3000/api/users?sort=date&status=online
 app.get('/api/users', (req, res) => {
   console.log(req.query);
   res.send([
@@ -14,6 +15,7 @@ app.get('/api/users', (req, res) => {
   ]);
 });
 
+// Route parameters: http://localhost:3000/api/users/1
 app.get('/api/users/:id', (req,res) => {
   console.log(req.params.id);
   const user = {id: req.params.id, name: `user${req.params.id}`};
