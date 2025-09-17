@@ -18,6 +18,7 @@ console.log("Application Name: " , config.get('name'));
 console.log("Application Version: " , config.get('version'));
 console.log("SMS: " , config.get('SMS'));
 console.log("SMS_IP: " , config.get('SMS.ip'));
+console.log("SMS_KEY: " , config.get('SMS.key'));
 
 if(app.get('env') === 'development'){
   app.use(morgan('tiny'));
