@@ -70,5 +70,19 @@ app.put('/api/users/:id', [
   });
 });
 
+app.delete('/api/users/:id', (req,res)=>{
+   const user = users.find(u => u.id === parseInt(req.params.id));
+   if(!user) return res.status(404).json({
+      data: null,
+      message: 'The user with the given ID was not found.'
+   });
+   const index = users.indexOf(user);
+   users.splice(index, 1);
+   res.json({
+      data: users, 
+      message: 'ok'
+   });
+});
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}`));
