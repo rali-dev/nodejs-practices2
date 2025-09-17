@@ -4,6 +4,7 @@ let users = require('./users');
 const app = express();
 const helmet = require('helmet');
 const morgan = require('morgan');
+const config = require('config');
 
 // Middlewares
 
@@ -13,9 +14,14 @@ app.use(express.static('public'));
 app.use(helmet());
 // app.use(morgan('tiny'));
 
+console.log("Application Name: " , config.get('name'));
+console.log("Application Version: " , config.get('version'));
+console.log("SMS: " , config.get('SMS'));
+console.log("SMS_IP: " , config.get('SMS.ip'));
+
 if(app.get('env') === 'development'){
   app.use(morgan('tiny'));
-  console.log('morgan enabled...');
+  console.log('morgan enabled...' );
 }
 
 // console.log('NODE_ENV:', process.env.NODE_ENV);
