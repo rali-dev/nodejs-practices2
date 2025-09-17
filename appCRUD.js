@@ -2,6 +2,8 @@ const express = require('express');
 let users = require('./users');
 const app = express();
 
+app.use(express.json());
+
 // app.get('/api/users', (req, res) =>{
 //   res.json(users);
 // });
@@ -26,6 +28,17 @@ app.get('/api/users/:id', (req, res)=>{
       message: 'ok'
    });
 })
+
+app.post('/api/users', (req, res)=>{
+   console.log(req.body);
+  // res.send('user created...');
+  users.push({id: users.length + 1, ...req.body});
+  console.log(users);
+  res.json({
+    data: users, 
+    message: 'ok'
+  });
+});  
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}`));
