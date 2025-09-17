@@ -1,4 +1,5 @@
 const express = require('express');
+const {body, validationResult} = require('express-validator');
 let users = require('./users');
 const app = express();
 
@@ -15,13 +16,11 @@ app.get('/api/users', (req, res) =>{
   });
 });
 
-//http://localhost:3000/api/users/3
-//http://localhost:3000/api/users/23
 app.get('/api/users/:id', (req, res)=>{
-   const user = users.find(u => u.id === parseInt(req.params.id)); 
-  //  if(!user) return res.status(404).send('The user with the given ID was not found.');
+   const user = users.find(u => u.id === parseInt(req.params.id));
     if(!user) return res.status(404).json({
-      error: 'The user with the given ID was not found.'
+      data: null,
+      message: 'The user with the given ID was not found.'
    });  
    res.status(200).json({
       data: user, 
@@ -29,11 +28,16 @@ app.get('/api/users/:id', (req, res)=>{
    });
 })
 
-app.post('/api/users', (req, res)=>{
-   console.log(req.body);
-  // res.send('user created...');
+app.post('/api/users', [
+    body('email', 'Invalid email').isEmail(),
+    body('first_name', 'First name is required').notEmpty().isLength({min: 2}),
+    body('last_name', 'Last name is required').notEmpty().isLength({min: 2}),
+],(req, res)=>{
+  const errors = validationResult(req);
+  if(!errors.isEmpty()){
+    return res.status(400).json({errors: errors.array(), message: 'Invalid data'});
+  }
   users.push({id: users.length + 1, ...req.body});
-  console.log(users);
   res.json({
     data: users, 
     message: 'ok'
