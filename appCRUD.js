@@ -3,11 +3,23 @@ const {body, validationResult} = require('express-validator');
 let users = require('./users');
 const app = express();
 const helmet = require('helmet');
+const morgan = require('morgan');
+
+// Middlewares
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('public'));
 app.use(helmet());
+// app.use(morgan('tiny'));
+
+if(app.get('env') === 'development'){
+  app.use(morgan('tiny'));
+  console.log('morgan enabled...');
+}
+
+// console.log('NODE_ENV:', process.env.NODE_ENV);
+// console.log('app:', app.get('env'));
 
 
 // app.get('/api/users', (req, res) =>{
