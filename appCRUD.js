@@ -4,6 +4,7 @@ let users = require('./users');
 const app = express();
 
 app.use(express.json());
+// app.use(express.urlencoded({extended: true}));
 
 // app.get('/api/users', (req, res) =>{
 //   res.json(users);
@@ -33,6 +34,7 @@ app.post('/api/users', [
     body('first_name', 'First name is required').notEmpty().isLength({min: 2}),
     body('last_name', 'Last name is required').notEmpty().isLength({min: 2}),
 ],(req, res)=>{
+  // return console.log(req.body);
   const errors = validationResult(req);
   if(!errors.isEmpty()){
     return res.status(400).json({errors: errors.array(), message: 'Invalid data'});
