@@ -6,6 +6,9 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const config = require('config');
 
+const debug = require('debug')('app:main');
+const dbdebug = require('debug')('app:db');
+
 // Middlewares
 
 app.use(express.json());
@@ -14,16 +17,18 @@ app.use(express.static('public'));
 app.use(helmet());
 // app.use(morgan('tiny'));
 
-console.log("Application Name: " , config.get('name'));
-console.log("Application Version: " , config.get('version'));
-console.log("SMS: " , config.get('SMS'));
-console.log("SMS_IP: " , config.get('SMS.ip'));
-console.log("SMS_KEY: " , config.get('SMS.key'));
+// console.log("Application Name: " , config.get('name'));
+// console.log("Application Version: " , config.get('version'));
+// console.log("SMS: " , config.get('SMS'));
+// console.log("SMS_IP: " , config.get('SMS.ip'));
+// console.log("SMS_KEY: " , config.get('SMS.key'));
 
 if(app.get('env') === 'development'){
   app.use(morgan('tiny'));
-  console.log('morgan enabled...' );
+  debug('morgan enabled...' );
 }
+
+dbdebug("Connected to the database...");
 
 // console.log('NODE_ENV:', process.env.NODE_ENV);
 // console.log('app:', app.get('env'));
