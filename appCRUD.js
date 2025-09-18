@@ -17,6 +17,9 @@ app.use(express.static('public'));
 app.use(helmet());
 // app.use(morgan('tiny'));
 
+app.set('view engine', 'ejs');
+app.set('views', './views'); // default
+
 // console.log("Application Name: " , config.get('name'));
 // console.log("Application Version: " , config.get('version'));
 // console.log("SMS: " , config.get('SMS'));
@@ -38,6 +41,9 @@ dbdebug("Connected to the database...");
 //   res.json(users);
 // });
 
+app.get('/', (req,res)=>{
+  res.render('home.ejs', {name: 'Rali'});
+});
 app.get('/api/users', (req, res) =>{
   res.json({
     data: users, 
